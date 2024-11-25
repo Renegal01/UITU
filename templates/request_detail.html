@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали заявки</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mt-5">
+            <h2>Детали заявки: {{ request.id }}</h2>
+            <a href="/" class="btn btn-secondary">Вернуться на главную</a>
+            {% if session['user_role'] == 'admin' %}
+                <a href="/add_user" class="btn btn-success">Добавить пользователя</a>
+                <a href="/view_users" class="btn btn-warning">Просмотр всех пользователей</a>
+            {% endif %}
+        </div>
+        <div class="card mt-3">
+            <div class="card-body">
+                {% if session['user_role'] in ['admin', 'support'] or session['username'] == request.responsible %}
+                <form method="post">
+                    <div class="form-group">
+                        <label for="date">Дата</label>
+                        <input type="text" class="form-control" id="date" name="date" value="{{ request.date }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Изменить статус заявки</label>
+                        <select class="form-control" id="status" name="status" required>
+                            {% set status_options = ['Новая заявка', 'В обработке', 'Завершено'] %}
+                            {% for option in status_options %}
+                                <option value="{{ option }}" {% if request.status == option %} selected {% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Тип заявки</label>
+                        <input type="text" class="form-control" id="type" name="type" value="{{ request.type }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="responsible">Ответственный</label>
+                        <input type="text" class="form-control" id="responsible" name="responsible" value="{{ request.responsible }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="team">Команда</label>
+                        <input type="text" class="form-control" id="team" name="team" value="{{ request.team }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="theme">Тема</label>
+                        <input type="text" class="form-control" id="theme" name="theme" value="{{ request.theme }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание заявки</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required>{{ request.description }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </form>
+                {% else %}
+                <h5 class="card-title">Заявка: {{ request.id }}</h5>
+                <p class="card-text"><strong>Дата:</strong> {{ request.date }}</p>
+                <p class="card-text"><strong>Статус:</strong> {{ request.status }}</p>
+                <p class="card-text"><strong>Тип:</strong> {{ request.type }}</p>
+                <p class="card-text"><strong>Ответственный:</strong> {{ request.responsible }}</p>
+                <p class="card-text"><strong>Команда:</strong> {{ request.team }}</p>
+                <p class="card-text"><strong>Тема:</strong> {{ request.theme }}</p>
+                <p class="card-text"><strong>Описание:</strong> {{ request.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

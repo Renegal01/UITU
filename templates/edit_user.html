@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование пользователя</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Редактирование пользователя: {{ user.username }}</h2>
+        <a href="/view_users" class="btn btn-secondary mb-3">Вернуться к списку пользователей</a>
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Имя пользователя</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Роль</label>
+                <select class="form-control" id="role" name="role" required>
+                    {% set role_options = ['admin', 'support', 'employee'] %}
+                    {% for option in role_options %}
+                        <option value="{{ option }}" {% if user.role == option %} selected {% endif %}>{{ option }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        </form>
+    </div>
+</body>
+</html>

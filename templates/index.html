@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель заявок</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mt-5">Панель заявок</h2>
+            <a href="/logout" class="btn btn-secondary mb-3">Выйти</a>
+        </div>
+        {% if session['user_role'] == 'admin' %}
+            <a href="/view_users" class="btn btn-success mb-3">Просмотр всех пользователей</a>
+            <a href="/service_catalog" class="btn btn-info mb-3">Управление каталогом услуг</a>
+        {% elif session['user_role'] == 'support' %}
+            <a href="/service_catalog" class="btn btn-info mb-3">Управление каталогом услуг</a>
+        {% endif %}
+        <a href="/manage_incidents" class="btn btn-success mb-3">Управление инцидентами</a>
+        <a href="/messaging_service" class="btn btn-primary mb-3">Сервис сообщений</a>
+    </div>
+</body>
+</html>

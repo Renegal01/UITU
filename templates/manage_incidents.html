@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление инцидентами</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Управление инцидентами</h2>
+        <a href="/add_incident" class="btn btn-primary mb-3">Добавить новый инцидент</a>
+        <a href="/" class="btn btn-secondary mb-3">Вернуться на главную</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Дата</th>
+                    <th>Тип</th>
+                    <th>Ответственный</th>
+                    <th>Команда</th>
+                    <th>Тема</th>
+                    <th>Описание</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for incident in incidents %}
+                <tr>
+                    <td>{{ incident.id }}</td>
+                    <td>{{ incident.date }}</td>
+                    <td>{{ incident.type }}</td>
+                    <td>{{ incident.responsible }}</td>
+                    <td>{{ incident.team }}</td>
+                    <td>{{ incident.theme }}</td>
+                    <td>{{ incident.description }}</td>
+                    <td>{{ incident.status }}</td>
+                    <td><a href="/request/{{ incident.id }}" class="btn btn-info">Просмотр деталей</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
